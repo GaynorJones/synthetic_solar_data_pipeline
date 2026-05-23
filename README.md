@@ -1,46 +1,54 @@
-# Synthetic Solar Data Pipeline
+# Synthetic Solar Data Pipeline (Python)
 
 ## Overview
 
 This project is a progressive data science and machine learning pipeline designed to simulate and analyse environmental systems using Python.
 
-It focuses on building a **solar irradiance → temperature modelling system**, combined with:
-- manual linear regression
-- statistical evaluation
-- residual analysis
-- structured data generation
-- reusable pipeline design
+It focuses on building a solar irradiance → temperature modelling system and developing it from a physics-based simulation into a machine learning regression pipeline.
 
-The goal was to move from raw Python scripting toward a **modular, reusable scientific computing pipeline**.
+The system combines:
 
-# Project Structure (Current State)
+synthetic data generation
+manual linear regression
+statistical evaluation
+residual analysis
+structured pipeline design
+early-stage machine learning workflow development
 
-## Solar Data Generation System
-Synthetic environmental dataset generator based on:
-•	Hour of day
-•	Month (seasonal variation)
-•	Physical irradiance model (sinusoidal curve)
-•	Temperature response model (linear dependency)
+The goal is to move from raw Python scripting toward a modular, reusable scientific computing and ML pipeline.
 
-### Key relationships:
-- Irradiance depends on:
-•	time of day (solar angle)
-•	seasonal factor (month)
-- Temperature depends on irradiance:
-•	linear physical approximation
+## Project Structure (Current State)
 
- Solar Regression Pipeline--
+### Solar Data Generation System
 
-## Data Generation
+The system generates synthetic environmental data based on:
 
-Synthetic dataset created using:
+hour of day (solar position)
+month of year (seasonal variation)
+sinusoidal irradiance model
+linear temperature response model
 
-•	`generate_dataset(month)`
-•	hourly simulation (0–23)
-•	multi-day structure (1–3 days initially)
-•	seasonal irradiance scaling
+## Key Physical Relationships
+ 
+### Irradiance Model
 
-Each record contains:
+Irradiance depends on:
+
+time of day (solar angle)
+seasonal scaling (month)
+
+This produces a sinusoidal daily energy curve.
+
+### Temperature Model
+
+Temperature depends on irradiance:
+
+linear approximation of physical response
+controlled noise-free relationship (current stage)
+
+## Data Structure
+
+Each generated record follows:
 
 {
     "day": int,
@@ -53,20 +61,22 @@ Each record contains:
 
 Regression variables:
 
-X (input): irradiance
-Y (target): temperature
+X (input) → irradiance
+y (target) → temperature
 
-Extracted via:
+Extracted using:
 
 x_values, y_values = extract_regression_variables(dataset)
 
 ## Linear Regression (Manual Implementation)
 
-A full least-squares regression implementation was built from scratch:
+A full least-squares regression model is implemented from scratch:
 
 slope (m)
 intercept (b)
+
 Model:
+
 T= mI + b
 
 Where:
@@ -74,120 +84,175 @@ Where:
 I = irradiance
 T = temperature
 
-Expected values:
+Expected approximate values:
 
 slope ≈ 0.02
-intercept ≈ 10
+intercept ≈ 10 
 
 ## Model Evaluation
 
 The model is evaluated using:
 
-Mean Squared Error (MSE)
+### Mean Squared Error (MSE)
 
 Measures average squared prediction error.
 
-Root Mean Squared Error (RMSE)
+### Root Mean Squared Error (RMSE)
 
-Interpretable error in original units.
+Interpretable error in original temperature units.
 
-Expected result:
+Expected result in current deterministic system:
 
 MSE ≈ 0
 RMSE ≈ 0
 
 ## Residual Analysis
 
-Residuals computed as:
+Residuals are computed as:
 
-residual=y−y^
-      
+residual=y− y^
+	​
 Used to:
 
-•	validate model correctness
-•	confirm linearity
-•	detect systematic error patterns
+validate model correctness
+confirm linearity
+detect systematic errors
+verify pipeline implementation
 
-Expected:
+Expected behaviour:
 
 random scatter around 0
-no structure (perfect model fit)
+no structured pattern (ideal case)
 
 ## Visualisations
 
-1. Regression Plot
-scatter of real data
+![Daily solar irradiance curve](daily_solar_irradiance_curve.png)
+![Daily irradiance/temperature curve](daily_solar_and_temperature_analysis.png)
+
+### Seasonal Irradiance Curves
+
+![Seasonal irradiance curve](seasonal_variation_in_solar_irradiance.png)
+
+demonstrates solar variation across months
+shows seasonal scaling effects
+
+### Regression Plot
+
+![Irradiance/temerature regression](irradiance_temperature_regression.png)
+
+observed data points
 fitted regression line
-2. Residual Plot
+
+### Residual Plot
+
+![Residuals vs irradiance](residuals_vs_irradiance.png)
+
 residuals vs input
 horizontal reference line at y = 0
-3. Seasonal Irradiance Curves
-irradiance variation across months
-demonstrates seasonal physics model
 
-## Key Concepts Learned 
+## Key Concepts Learned
 
-•	Programming Skills
-•	modular function design
-•	reusable pipelines
-•	dictionary-based structured return objects
-•	data extraction patterns
-•	data science concepts
-•	synthetic data generation
-•	feature-target separation
-•	regression modelling from scratch
-•	error metrics (MSE, RMSE)
-•	residual diagnostics
-•	physics-informed modelling
-•	sinusoidal solar model
-•	seasonal scaling
-•	linear temperature response
+### Programming Skills
 
-## Pipeline Architecture 
+modular function design
+reusable pipeline structure
+dictionary-based outputs
+data extraction patterns
+
+### Data Science Foundations
+
+feature/target separation
+synthetic dataset generation
+regression modelling from scratch
+error metrics (MSE, RMSE)
+residual diagnostics
+
+### Physical Modelling
+
+sinusoidal solar irradiance
+seasonal scaling effects
+simplified temperature response system
+
+## Pipeline Architecture
 
 Data Generation
-      ↓
-Feature Extraction
-      ↓
-Linear Regression (manual)
-      ↓
-Prediction
-      ↓
-Evaluation (MSE / RMSE)
-      ↓
-Residual Analysis
-      ↓
-Visualisation
+→ Feature Extraction
+→ Linear Regression (manual)
+→ Prediction
+→ Evaluation (MSE / RMSE)
+→ Residual Analysis
+→ Visualisation
 
-## Current Limitations 
+## Current Limitations
 
 This system is currently:
 
-•	fully deterministic
-•	noise-free
-•	perfectly linear
+fully deterministic
+noise-free
+perfectly linear
 
 This is intentional to:
 
-•	validate regression correctness
-•	verify pipeline structure
-•	ensure mathematical consistency
+validate regression correctness
+verify pipeline structure
+ensure mathematical consistency
 
-## Next Stage 
+## Current Machine Learning Components
 
-The system will evolve into a realistic machine learning pipeline:
+The system now includes a full introductory machine learning regression pipeline using scikit-learn.
 
-Planned additions:
+### Implemented Features
 
-•	scikit-learn regression
-•	train/test split
-•	data noise injection (cloud cover, weather variability)
-•	diurnal asymmetry
-•	temperature lag effects
-•	classification tasks (threshold-based labels)
-•	multi-dataset integration
+scikit-learn Linear Regression model
+train/test split for evaluation
+model training on training dataset only
+prediction on unseen test data
+comparison with manual regression model
+evaluation using:
+    MSE (Mean Squared Error)
+    RMSE (Root Mean Squared Error)
 
+![Irradiance/temerature regression (sklearn)](irradiance_temperature_regression_sklearn.png)
 
+![Residuals vs irradiance (sklearn)](residuals_vs_irradiance_sklearn.png)
 
+### Model Behaviour
 
+The sklearn model closely matches the manually implemented regression:
 
+similar slope values
+similar intercept values
+near-identical prediction curves
+small numerical differences due to optimisation method
+
+This confirms that:
+
+manual implementation is correct
+ML library implementation behaves as expected
+pipeline structure is valid
+
+## Updated Pipeline Architecture
+
+Data Generation
+→ Feature Extraction
+→ Train/Test Split
+→ Model Training (scikit-learn)
+→ Prediction (test set)
+→ Evaluation (MSE / RMSE)
+→ Comparison with manual regression
+→ Residual Analysis
+→ Visualisation
+
+## Next Stage Development
+
+The system will evolve toward more realistic environmental modelling:
+
+### Planned Enhancements
+
+noise injection (cloud variability, measurement error)
+asymmetric daylight curves (realistic sunrise/sunset effects)
+seasonal daylight length variation
+temperature lag effects (thermal inertia)
+more complex nonlinear models
+transition to classification tasks
+multi-dataset integration (solar + air quality comparison)
